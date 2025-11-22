@@ -14,9 +14,9 @@ Before you begin, ensure you have the following installed on your machine:
 ## Getting Started
 
 ### Step 1: Make sure you are in the project directory
-if not cd into library-app in your terminal
+if not cd into Chinese-Library-App in your terminal
 ```bash
-cd library-app
+cd Chinese-Library-App
 ```
 
 ### Step 2: Install Required Dependencies
