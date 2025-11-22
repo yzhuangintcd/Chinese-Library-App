@@ -104,11 +104,18 @@ library-app/
 ├── public/
 │   ├── index.html
 │   └── ...
-├── src/
-│   ├── AppMain.js      # Main application component
-|   ├── App.js          # Old Main application component, Ingore this please
-│   ├── index.js        # Entry point
-│   ├── App.css         # styles
+├── pages/
+│   ├── BookSpacePage.js  # Book a study space - Cora
+|   ├── ... 
+|   ├── StartupPage.js    # Welcome page - Paddy
+├── src/  
+|   ├── asset/            # Logo 
+│   ├── AppMain.js        # Main application component
+|   ├── App.js            # Old Main application component, Ingore 
+│   ├── AppMain.js        # Main application component
+|   ├── App.js            # Old Main application component, Ingore this please
+│   ├── index.js          # Entry point
+│   ├── App.css           # styles
 │   └── ...
 ├── package.json
 └── README.md
