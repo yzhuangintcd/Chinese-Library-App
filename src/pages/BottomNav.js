@@ -1,5 +1,5 @@
 // nav bar
-import { House, Book, CreditCard } from "lucide-react";
+import { House, Search, BookOpen, Calendar, CreditCard } from "lucide-react";
 
 const BottomNav = ({ currentPage, setCurrentPage }) => {
   return (
@@ -15,15 +15,29 @@ const BottomNav = ({ currentPage, setCurrentPage }) => {
         className={`nav-item ${currentPage === "bookings" ? "active" : ""}`}
         onClick={() => setCurrentPage("bookings")}
       >
-        <Book size={20} />
-        <span>Bookings</span>
+        <Search size={20} />
+        <span>Search</span>
+      </button>
+      <button
+        className={`nav-item ${currentPage === "book_space" ? "active" : ""}`}
+        onClick={() => setCurrentPage("book_space")}
+      >
+        <BookOpen size={20} />
+        <span>Study</span>
+      </button>
+      <button
+        className={`nav-item ${currentPage === "book_event" ? "active" : ""}`}
+        onClick={() => setCurrentPage("book_event")}
+      >
+        <Calendar size={20} />
+        <span>Event</span>
       </button>
       <button
         className={`nav-item ${currentPage === "payments" ? "active" : ""}`}
         onClick={() => setCurrentPage("payments")}
       >
         <CreditCard size={20} />
-        <span>Payments</span>
+        <span>Payment</span>
       </button>
     </div>
   );
