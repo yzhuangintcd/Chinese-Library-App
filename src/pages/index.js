@@ -10,3 +10,5 @@ export { default as PaymentPage } from "./PaymentPage";
 export { default as BottomNav } from "./BottomNav";
 export { default as BookSpacePage } from "./BookSpacePage";
 export { default as EventBookingPage } from "./EventBookingPage";
+export { default as BookCheckoutPage } from "./BookCheckoutPage";
+export { default as BookConfirmationPage } from "./BookConfirmationPage";

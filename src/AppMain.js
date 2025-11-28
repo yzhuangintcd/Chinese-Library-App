@@ -12,6 +12,8 @@ import {
   BorrowBookPage,
   BookSpacePage,
   EventBookingPage,
+  BookCheckoutPage,
+  BookConfirmationPage,
   PaymentPage,
   BottomNav,
 } from "./pages";
@@ -24,6 +26,8 @@ const LibraryApp = () => {
   const [recentActivities, setRecentActivities] = useState([]);
   const [showLanguageMenu, setShowLanguageMenu] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
+  const [checkoutData, setCheckoutData] = useState({});
 
   const addActivity = (text) => setRecentActivities((s) => [text, ...s]);
 
@@ -132,6 +136,30 @@ const LibraryApp = () => {
             language={language}
             elderlyMode={elderlyMode}
             setCurrentPage={setCurrentPage}
+            addActivity={addActivity}
+            setSelectedBook={setSelectedBook}
+            setCheckoutData={setCheckoutData}
+          />
+        );
+      case "checkout":
+        return (
+          <BookCheckoutPage
+            language={language}
+            elderlyMode={elderlyMode}
+            setCurrentPage={setCurrentPage}
+            selectedBook={selectedBook}
+            checkoutData={checkoutData}
+            setCheckoutData={setCheckoutData}
+          />
+        );
+      case "checkout-confirmation":
+        return (
+          <BookConfirmationPage
+            language={language}
+            elderlyMode={elderlyMode}
+            setCurrentPage={setCurrentPage}
+            selectedBook={selectedBook}
+            checkoutData={checkoutData}
             addActivity={addActivity}
           />
         );

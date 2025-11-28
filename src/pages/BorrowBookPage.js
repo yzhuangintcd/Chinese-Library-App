@@ -6,6 +6,8 @@ const BorrowBookPage = ({
   elderlyMode,
   setCurrentPage,
   addActivity,
+  setSelectedBook,
+  setCheckoutData,
 }) => {
   const popularBooks = [
     {
@@ -33,9 +35,9 @@ const BorrowBookPage = ({
   const [expandedBook, setExpandedBook] = useState(null);
 
   const handleLoan = (book) => {
-    if (addActivity) addActivity(`Borrowed: ${book.title}`);
-    setExpandedBook(null);
-    setCurrentPage("dashboard");
+    if (setSelectedBook) setSelectedBook(book);
+    if (setCheckoutData) setCheckoutData({});
+    setCurrentPage("checkout");
   };
 
   return (
@@ -84,15 +86,15 @@ const BorrowBookPage = ({
                         className="btn btn-primary"
                         onClick={() => handleLoan(b)}
                       >
-                        {language === "zh" ? "确认借阅" : "Confirm Loan"}
+                        {language === "zh" ? "借阅" : "Loan"}
                       </button>
                     ) : (
                       <button
                         className="btn btn-warning"
                         onClick={() => {
-                          if (addActivity)
-                            addActivity(`Ordered in: ${b.title}`);
-                          setCurrentPage("dashboard");
+                          if (setSelectedBook) setSelectedBook(b);
+                          if (setCheckoutData) setCheckoutData({});
+                          setCurrentPage("checkout");
                         }}
                       >
                         {language === "zh" ? "预约到馆" : "Order In"}
