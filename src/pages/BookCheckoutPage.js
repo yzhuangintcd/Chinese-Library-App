@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const BookCheckoutPage = ({
@@ -82,14 +82,6 @@ const BookCheckoutPage = ({
       setCheckoutData(localCheckoutData);
     }
     setCurrentPage("checkout-confirmation");
-  };
-
-  const formatDate = (date) => {
-    return date.toLocaleDateString(language === "zh" ? "zh-CN" : "en-US", {
-      month: "short",
-      day: "numeric",
-      weekday: "short",
-    });
   };
 
   // Calculate valid date range (next 14 days)
