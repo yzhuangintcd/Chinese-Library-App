@@ -14,6 +14,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
     {
       title: "Romance of Three Kingdoms",
       titleZh: "三国演义",
+      coverImage: "romance-of-three-kingdoms.png",
       categories: [
         { en: "History", zh: "历史" },
       ],
@@ -25,6 +26,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
     {
       title: "Complete Tang Poems",
       titleZh: "全唐诗",
+      coverImage: "/complete-tang-poems.png",
       categories: [
         { en: "Poetry", zh: "诗歌" },
         { en: "Literature", zh: "文学" },
@@ -38,6 +40,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
     {
       title: "Journey to the West",
       titleZh: "西游记",
+      coverImage: "/journey-to-the-west.png",
       categories: [
         { en: "Literature", zh: "文学" },
         { en: "Fantasy", zh: "奇幻" }
@@ -50,6 +53,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
     {
       title: "The Art of War",
       titleZh: "孙子兵法",
+      coverImage: "/art-of-war.png",
       categories: [
         { en: "Philosophy", zh: "哲学" },
         { en: "Military", zh: "军事" },
@@ -59,18 +63,6 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
       authorZh: "孙子",
       available: true,
       copies: 5
-    },
-    {
-      title: "Dream of the Red Chamber",
-      titleZh: "红楼梦",
-      categories: [
-        { en: "Literature", zh: "文学" },
-        { en: "Romance", zh: "言情" }
-      ],
-      author: "Cao Xueqin",
-      authorZh: "曹雪芹",
-      available: true,
-      copies: 2
     },
   ];
 
@@ -176,19 +168,43 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
             <div key={idx} className="book-card">
               <div style={{ padding: 16 }}>
                 <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
+                  {/* Book Cover Image */}
                   <div
                     style={{
-                      width: 40,
-                      height: 40,
-                      borderRadius: 8,
-                      background: "#EFF6FF",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      width: 60,
+                      height: 90,
+                      borderRadius: 4,
+                      overflow: "hidden",
                       flexShrink: 0,
+                      border: "1px solid #E5E7EB",
+                      background: "#F3F4F6",
                     }}
                   >
-                    <BookOpen size={22} style={{ color: "#2563EB" }} />
+                    {book.coverImage ? (
+                      <img
+                        src={book.coverImage}
+                        alt={language === "zh" ? book.titleZh : book.title}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    ) : (
+                      // Fallback icon if no image
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          background: "#EFF6FF",
+                        }}
+                      >
+                        <BookOpen size={24} style={{ color: "#2563EB" }} />
+                      </div>
+                    )}
                   </div>
 
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -226,6 +242,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
                         title: language === "zh" ? book.titleZh : book.title,
                         author: language === "zh" ? book.authorZh : book.author,
                         categories: getCategoriesText(book),
+                        cover: book.coverImage,
                       });
                       setCurrentPage("checkout");
                     }
@@ -238,7 +255,7 @@ export default function BrowseBooksPage({ language = "en", elderlyMode = false, 
                     cursor: book.available ? "pointer" : "not-allowed",
                   }}
                 >
-                  {language === "zh" ? "借阅" : "Rent"}
+                  {language === "zh" ? "借阅" : "Loan"}
                 </button>
               </div>
             </div>

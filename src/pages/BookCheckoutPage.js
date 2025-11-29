@@ -207,15 +207,31 @@ const BookCheckoutPage = ({
               padding: 12,
               borderRadius: 8,
               marginBottom: 16,
+              display: "flex",
+              gap: 12,
+              alignItems: "center",
             }}
           >
-            <p style={{ fontWeight: 600, marginBottom: 4 }}>
-              {selectedBook.title}
-            </p>
-            <p style={{ fontSize: "0.875em", color: "#6B7280" }}>
-              {language === "zh" ? "作者：" : "Author: "}
-              {selectedBook.author}
-            </p>
+            <img
+              src={selectedBook.cover}
+              alt={selectedBook.title}
+              style={{
+                width: 60,
+                height: 80,
+                objectFit: "cover",
+                borderRadius: 4,
+                flexShrink: 0,
+              }}
+            />
+            <div>
+              <p style={{ fontWeight: 600, marginBottom: 4 }}>
+                {selectedBook.title}
+              </p>
+              <p style={{ fontSize: "0.875em", color: "#6B7280" }}>
+                {language === "zh" ? "作者：" : "Author: "}
+                {selectedBook.author}
+              </p>
+            </div>
           </div>
         )}
 
