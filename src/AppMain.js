@@ -109,6 +109,7 @@ const LibraryApp = () => {
             setCurrentPage={setCurrentPage}
             recentActivities={recentActivities}
             user={user}
+            setSelectedBook={setSelectedBook}
           />
         );
       case "book_space":

@@ -192,7 +192,7 @@ const BookCheckoutPage = ({
   return (
     <div className={`page ${elderlyMode ? "elderly-mode" : ""}`}>
       <div className="page-header">
-        <button onClick={() => setCurrentPage("borrow")} className="back-btn">
+        <button onClick={() => setCurrentPage("bookings")} className="back-btn">
           ← {language === "zh" ? "返回" : "Back"}
         </button>
         <h1>{language === "zh" ? "确认取书详情" : "Confirm Pickup Details"}</h1>

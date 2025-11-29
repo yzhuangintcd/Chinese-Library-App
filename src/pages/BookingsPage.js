@@ -1,82 +1,249 @@
-// page that goes to borrow book (Paddy) and book study space (Cora)
 import { useState } from "react";
-import { Filter, Search, BookOpen } from "lucide-react";
+import { Filter, Search, BookOpen, X } from "lucide-react";
 
-export default function BrowseBooksPage({ language, elderlyMode, setCurrentPage }) {
+export default function BrowseBooksPage({ language = "en", elderlyMode = false, setCurrentPage = () => {}, setSelectedBook = () => {} }) {
   const [query, setQuery] = useState("");
-  const [selectedTags, setSelectedTags] = useState(["Philosophy", "History"]);
+  const [selectedTags, setSelectedTags] = useState([
+    { en: "Philosophy", zh: "哲学" },
+    { en: "Poetry", zh: "诗歌" },
+    { en: "Fantasy", zh: "奇幻" },
+    { en: "History", zh: "历史" }
+  ]);
 
   const results = [
     {
       title: "Romance of Three Kingdoms",
-      category: "History",
+      titleZh: "三国演义",
+      categories: [
+        { en: "History", zh: "历史" },
+      ],
       author: "Guanzhong Luo",
+      authorZh: "罗贯中",
+      available: true,
+      copies: 3
     },
     {
       title: "Complete Tang Poems",
-      category: "History",
-      author: "N/A",
+      titleZh: "全唐诗",
+      categories: [
+        { en: "Poetry", zh: "诗歌" },
+        { en: "Literature", zh: "文学" },
+        { en: "Classical", zh: "古典" }
+      ],
+      author: "Various Authors",
+      authorZh: "多位作者",
+      available: true,
+      copies: 2
+    },
+    {
+      title: "Journey to the West",
+      titleZh: "西游记",
+      categories: [
+        { en: "Literature", zh: "文学" },
+        { en: "Fantasy", zh: "奇幻" }
+      ],
+      author: "Wu Cheng'en",
+      authorZh: "吴承恩",
+      available: false,
+      copies: 0
+    },
+    {
+      title: "The Art of War",
+      titleZh: "孙子兵法",
+      categories: [
+        { en: "Philosophy", zh: "哲学" },
+        { en: "Military", zh: "军事" },
+        { en: "Strategy", zh: "战略" }
+      ],
+      author: "Sun Tzu",
+      authorZh: "孙子",
+      available: true,
+      copies: 5
+    },
+    {
+      title: "Dream of the Red Chamber",
+      titleZh: "红楼梦",
+      categories: [
+        { en: "Literature", zh: "文学" },
+        { en: "Romance", zh: "言情" }
+      ],
+      author: "Cao Xueqin",
+      authorZh: "曹雪芹",
+      available: true,
+      copies: 2
     },
   ];
 
+  const removeTag = (tagToRemove) => {
+    setSelectedTags(selectedTags.filter(tag => tag.en !== tagToRemove.en));
+  };
+
+  // Helper function to get categories display text
+  const getCategoriesText = (book) => {
+    if (!book.categories || book.categories.length === 0) return "";
+    return book.categories
+      .map(cat => language === "zh" ? cat.zh : cat.en)
+      .join(", ");
+  };
+
   return (
-    <div className={`page p-4 ${elderlyMode ? "elderly-mode" : ""}`}>      
-      <h1 className="text-3xl font-bold mb-4">{language === "zh" ? "浏览图书" : "Browse Books"}</h1>
-
-      {/* Search Bar */}
-      <div className="flex items-center gap-2 mb-4 w-full">
-        <div className="flex items-center border rounded-xl px-3 py-2 w-full bg-white shadow">
-          <Search size={20} />
-          <input
-            type="text"
-            placeholder={language === "zh" ? "按名称、作者、ISBN搜索" : "Search by name, author, ISBN"}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="ml-2 w-full outline-none"
-          />
-        </div>
-        <button className="flex items-center gap-1 border px-3 py-2 rounded-xl bg-white shadow min-w-[70px] justify-center">
-          <Filter size={18} />
-          {language === "zh" ? "筛选" : "Filter"}
-        </button>
+    <div className={`page ${elderlyMode ? "elderly-mode" : ""}`}>
+      <div className="page-header">
+        <h1>{language === "zh" ? "浏览图书" : "Browse Books"}</h1>
       </div>
 
-      {/* Tags */}
-      <div className="flex gap-2 mb-4">
-        {selectedTags.map((tag, i) => (
-          <span key={i} className="px-3 py-1 border rounded-xl bg-white shadow text-sm">{tag}</span>
-        ))}
-      </div>
-
-      {/* Results count */}
-      <h2 className="text-xl mb-2">{language === "zh" ? "找到 5 条结果" : "Found 5 results"}</h2>
-
-      {/* Book Results */}
-      <div className="flex flex-col gap-4 max-h-[55vh] overflow-y-auto pr-2">
-        {results.map((book, idx) => (
+      <div className="page-content">
+        {/* Search Bar */}
+        <div style={{ display: "flex", gap: 8, marginBottom: 16 }}>
           <div
-            key={idx}
-            className="border rounded-2xl p-4 bg-white shadow flex flex-col gap-2 relative"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              border: "1px solid #D1D5DB",
+              borderRadius: 8,
+              padding: "10px 12px",
+              flex: 1,
+              background: "white",
+            }}
           >
-            <div className="flex items-center gap-2">
-              <BookOpen size={22} />
-              <div className="font-semibold text-lg">{book.title}</div>
-            </div>
-
-            <span className="px-2 py-1 border rounded-lg bg-white shadow text-sm w-fit">{book.category}</span>
-
-            <div className="text-md">
-              <strong>{language === "zh" ? "作者:" : "Author:"}</strong> {book.author}
-            </div>
-
-            <button
-              className="absolute right-4 bottom-4 border px-4 py-1 rounded-xl bg-white shadow"
-              onClick={() => setCurrentPage("borrow_confirm")}
-            >
-              {language === "zh" ? "借阅" : "Rent"}
-            </button>
+            <Search size={20} style={{ color: "#6B7280" }} />
+            <input
+              type="text"
+              placeholder={language === "zh" ? "按名称、作者、ISBN搜索" : "Search by name, author, ISBN"}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              style={{
+                marginLeft: 8,
+                width: "100%",
+                border: "none",
+                outline: "none",
+                fontSize: "1em",
+              }}
+            />
           </div>
-        ))}
+          <button
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 6,
+              border: "1px solid #D1D5DB",
+              padding: "10px 16px",
+              borderRadius: 8,
+              background: "white",
+              cursor: "pointer",
+              fontSize: "1em",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <Filter size={18} />
+            {language === "zh" ? "筛选" : "Filter"}
+          </button>
+        </div>
+
+        {/* Tags */}
+        {selectedTags.length > 0 && (
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
+            {selectedTags.map((tag, i) => (
+              <span
+                key={i}
+                className="badge"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  cursor: "pointer",
+                }}
+              >
+                {language === "zh" ? tag.zh : tag.en}
+                <X
+                  size={14}
+                  style={{ cursor: "pointer", color: "#6B7280" }}
+                  onClick={() => removeTag(tag)}
+                />
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Results count */}
+        <h2 className="section-title">
+          {language === "zh" ? `找到 ${results.length} 条结果` : `Found ${results.length} results`}
+        </h2>
+
+        {/* Book Results */}
+        <div className="books-list">
+          {results.map((book, idx) => (
+            <div key={idx} className="book-card">
+              <div style={{ padding: 16 }}>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 8,
+                      background: "#EFF6FF",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <BookOpen size={22} style={{ color: "#2563EB" }} />
+                  </div>
+
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h3 className="book-title" style={{ marginBottom: 4 }}>
+                      {language === "zh" ? book.titleZh : book.title}
+                    </h3>
+
+                    <p className="book-author">
+                      {language === "zh" ? book.authorZh : book.author}
+                    </p>
+
+                    <div className="book-meta" style={{ flexWrap: "wrap" }}>
+                      {/* Display each category as individual badges */}
+                      {book.categories && book.categories.map((cat, catIdx) => (
+                        <span key={catIdx} className="badge">
+                          {language === "zh" ? cat.zh : cat.en}
+                        </span>
+                      ))}
+                      <span className={`status-badge ${book.available ? 'available' : 'unavailable'}`}>
+                        {book.available 
+                          ? (language === "zh" ? `可借 (${book.copies})` : `Available (${book.copies})`)
+                          : (language === "zh" ? "已借出" : "Checked Out")
+                        }
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Action Button */}
+                <button
+                  disabled={!book.available}
+                  onClick={() => {
+                    if (book.available) {
+                      setSelectedBook({
+                        title: language === "zh" ? book.titleZh : book.title,
+                        author: language === "zh" ? book.authorZh : book.author,
+                        categories: getCategoriesText(book),
+                      });
+                      setCurrentPage("checkout");
+                    }
+                  }}
+                  className={book.available ? "btn btn-primary" : "btn"}
+                  style={{
+                    width: "100%",
+                    background: book.available ? "#2C9678" : "#E5E7EB",
+                    color: book.available ? "white" : "#9CA3AF",
+                    cursor: book.available ? "pointer" : "not-allowed",
+                  }}
+                >
+                  {language === "zh" ? "借阅" : "Rent"}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
