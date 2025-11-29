@@ -194,7 +194,10 @@ const LibraryApp = () => {
     <div className="app-container">
       {renderPage()}
       {showBottomNav && (
-        <BottomNav currentPage={currentPage} setCurrentPage={setCurrentPage} />
+        <BottomNav currentPage={currentPage} 
+        setCurrentPage={setCurrentPage} 
+        language={language}
+        />
       )}
     </div>
   );
