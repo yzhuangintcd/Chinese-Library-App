@@ -46,7 +46,7 @@ const LoginPage = ({ language, setCurrentPage, elderlyMode, onLogin }) => {
           </button>
           <br />
           <a href="#" className="link">
-            {language === "zh" ? "忘记密码?" : "Forgot your password?"}
+            {language === "zh" ? "忘记密码?" : "Forgot your ID?"}
           </a>
         </form>
       </div>

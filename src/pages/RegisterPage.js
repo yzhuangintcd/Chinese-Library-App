@@ -16,8 +16,7 @@ const RegisterPage = ({
     nationality: "",
     passport: "",
     visa: "",
-    password: "",
-    useOTP: false,
+    // password removed: users will login with account id
     agreedToTerms: false,
   });
 
@@ -201,33 +200,7 @@ const RegisterPage = ({
               </>
             )}
 
-            <div className="form-group">
-              <label>{language === "zh" ? "密码" : "Password"}</label>
-              <input
-                type="password"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-                disabled={formData.useOTP}
-                required={!formData.useOTP}
-              />
-
-              <label className="checkbox-label">
-                <input
-                  type="checkbox"
-                  checked={formData.useOTP}
-                  onChange={(e) =>
-                    setFormData({ ...formData, useOTP: e.target.checked })
-                  }
-                />
-                <span>
-                  {language === "zh"
-                    ? "使用一次性密码（OTP）"
-                    : "Use OTP instead"}
-                </span>
-              </label>
-            </div>
+            {/* Password field removed: users will sign in with account ID */}
 
             <div className="form-group">
               <label className="checkbox-label">

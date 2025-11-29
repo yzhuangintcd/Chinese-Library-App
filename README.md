@@ -69,10 +69,9 @@ The application should automatically open in your browser at `http://localhost:3
    - **Adult Chinese**: Enter ID number (any format) and phone
    - **Child**: Enter guardian ID and phone
    - **Foreign**: Enter nationality, passport, visa info, and phone
-3. Set a password or enable OTP
-4. Accept terms and conditions
-5. Click **"Register"**
-6. Note your generated account number
+3. Accept terms and conditions
+4. Click **"Register"**
+5. Note your generated account number
 * Note: you can just use random characters here, we don't have a database to actually check anything 
 
 ### Testing Login Flow:
