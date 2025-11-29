@@ -1,77 +1,83 @@
 // page that goes to borrow book (Paddy) and book study space (Cora)
-import { BookOpen, Calendar } from "lucide-react";
+import { useState } from "react";
+import { Filter, Search, BookOpen } from "lucide-react";
 
-const BookingsPage = ({
-  language,
-  elderlyMode,
-  setCurrentPage,
-  recentActivities = [],
-  user,
-}) => {
-  // derive explicit bookings from recentActivities
-  const bookings = (recentActivities || []).filter((a) => {
-    if (!a || typeof a !== "string") return false;
-    const text = a.toLowerCase();
-    return (
-      text.includes("borrowed") ||
-      text.includes("ordered in") ||
-      text.includes("booked a study space") ||
-      text.includes("booked an event") ||
-      text.includes("reserved")
-    );
-  });
+export default function BrowseBooksPage({ language, elderlyMode, setCurrentPage }) {
+  const [query, setQuery] = useState("");
+  const [selectedTags, setSelectedTags] = useState(["Philosophy", "History"]);
+
+  const results = [
+    {
+      title: "Romance of Three Kingdoms",
+      category: "History",
+      author: "Guanzhong Luo",
+    },
+    {
+      title: "Complete Tang Poems",
+      category: "History",
+      author: "N/A",
+    },
+  ];
+
   return (
-    <div className={`page ${elderlyMode ? "elderly-mode" : ""}`}>
-      <div className="page-header">
-        <h1>{language === "zh" ? "预订" : "Bookings"}</h1>
+    <div className={`page p-4 ${elderlyMode ? "elderly-mode" : ""}`}>      
+      <h1 className="text-3xl font-bold mb-4">{language === "zh" ? "浏览图书" : "Browse Books"}</h1>
+
+      {/* Search Bar */}
+      <div className="flex items-center gap-2 mb-4 w-full">
+        <div className="flex items-center border rounded-xl px-3 py-2 w-full bg-white shadow">
+          <Search size={20} />
+          <input
+            type="text"
+            placeholder={language === "zh" ? "按名称、作者、ISBN搜索" : "Search by name, author, ISBN"}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="ml-2 w-full outline-none"
+          />
+        </div>
+        <button className="flex items-center gap-1 border px-3 py-2 rounded-xl bg-white shadow min-w-[70px] justify-center">
+          <Filter size={18} />
+          {language === "zh" ? "筛选" : "Filter"}
+        </button>
       </div>
 
-      <div className="page-content">
-        <button
-          onClick={() => setCurrentPage("borrow")}
-          className="booking-option-btn"
-        >
-          <BookOpen size={24} />
-          {language === "zh" ? "借阅图书" : "Borrow a Book"}
-        </button>
+      {/* Tags */}
+      <div className="flex gap-2 mb-4">
+        {selectedTags.map((tag, i) => (
+          <span key={i} className="px-3 py-1 border rounded-xl bg-white shadow text-sm">{tag}</span>
+        ))}
+      </div>
 
-        <button
-          onClick={() => setCurrentPage("book_space")}
-          className="booking-option-btn"
-        >
-          <Calendar size={24} />
-          {language === "zh" ? "预订学习空间" : "Book a Study Space"}
-        </button>
+      {/* Results count */}
+      <h2 className="text-xl mb-2">{language === "zh" ? "找到 5 条结果" : "Found 5 results"}</h2>
 
-        <button
-          onClick={() => setCurrentPage("book_event")}
-          className="booking-option-btn"
-        >
-          <Calendar size={24} />
-          {language === "zh" ? "预订活动" : "Book an Event"}
-        </button>
-        {/* Bookings summary area */}
-        <div style={{ marginTop: 20 }}>
-          <h3 style={{ marginBottom: 8 }}>
-            {language === "zh" ? "我的预订" : "My Bookings"}
-          </h3>
-          {bookings.length > 0 ? (
-            <div className="bookings-list">
-              {bookings.map((b, i) => (
-                <div key={i} className="booking-item">
-                  <div className="booking-text">{b}</div>
-                </div>
-              ))}
+      {/* Book Results */}
+      <div className="flex flex-col gap-4 max-h-[55vh] overflow-y-auto pr-2">
+        {results.map((book, idx) => (
+          <div
+            key={idx}
+            className="border rounded-2xl p-4 bg-white shadow flex flex-col gap-2 relative"
+          >
+            <div className="flex items-center gap-2">
+              <BookOpen size={22} />
+              <div className="font-semibold text-lg">{book.title}</div>
             </div>
-          ) : (
-            <div className="empty-state">
-              {language === "zh" ? "暂无预订" : "No bookings yet"}
+
+            <span className="px-2 py-1 border rounded-lg bg-white shadow text-sm w-fit">{book.category}</span>
+
+            <div className="text-md">
+              <strong>{language === "zh" ? "作者:" : "Author:"}</strong> {book.author}
             </div>
-          )}
-        </div>
+
+            <button
+              className="absolute right-4 bottom-4 border px-4 py-1 rounded-xl bg-white shadow"
+              onClick={() => setCurrentPage("borrow_confirm")}
+            >
+              {language === "zh" ? "借阅" : "Rent"}
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );
-};
-
-export default BookingsPage;
+}
