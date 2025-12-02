@@ -11,9 +11,6 @@ const BookCheckoutPage = ({
   const [localCheckoutData, setLocalCheckoutData] = useState({
     pickupDate: "",
     pickupTime: "",
-    name: "",
-    phone: "",
-    email: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -39,20 +36,6 @@ const BookCheckoutPage = ({
     },
   ];
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setLocalCheckoutData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
-  };
-
   const validateForm = () => {
     const newErrors = {};
     if (!localCheckoutData.pickupDate)
@@ -61,12 +44,6 @@ const BookCheckoutPage = ({
     if (!localCheckoutData.pickupTime)
       newErrors.pickupTime =
         language === "zh" ? "请选择取书时间" : "Please select pickup time";
-    if (!localCheckoutData.name.trim())
-      newErrors.name =
-        language === "zh" ? "请输入姓名" : "Please enter your name";
-    if (!localCheckoutData.phone.trim())
-      newErrors.phone =
-        language === "zh" ? "请输入电话号码" : "Please enter phone number";
     return newErrors;
   };
 
@@ -429,105 +406,6 @@ const BookCheckoutPage = ({
               {errors.pickupTime}
             </p>
           )}
-        </div>
-
-        {/* Personal info form */}
-        <div
-          style={{
-            marginBottom: 16,
-            paddingBottom: 16,
-            borderBottom: "1px solid #E5E7EB",
-          }}
-        >
-          <h3 style={{ marginBottom: 12 }}>
-            {language === "zh" ? "个人信息" : "Personal Information"}
-          </h3>
-
-          <div style={{ marginBottom: 12 }}>
-            <label
-              style={{ fontWeight: 600, marginBottom: 6, display: "block" }}
-            >
-              {language === "zh" ? "姓名" : "Name"} *
-            </label>
-            <input
-              type="text"
-              name="name"
-              value={localCheckoutData.name}
-              onChange={handleInputChange}
-              placeholder={
-                language === "zh" ? "请输入您的姓名" : "Enter your name"
-              }
-              style={{
-                width: "100%",
-                padding: 12,
-                border: errors.name ? "2px solid #EF4444" : "1px solid #D1D5DB",
-                borderRadius: 8,
-                fontSize: "1em",
-              }}
-            />
-            {errors.name && (
-              <p
-                style={{ color: "#EF4444", fontSize: "0.875em", marginTop: 4 }}
-              >
-                {errors.name}
-              </p>
-            )}
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label
-              style={{ fontWeight: 600, marginBottom: 6, display: "block" }}
-            >
-              {language === "zh" ? "电话号码" : "Phone Number"} *
-            </label>
-            <input
-              type="tel"
-              name="phone"
-              value={localCheckoutData.phone}
-              onChange={handleInputChange}
-              placeholder={
-                language === "zh" ? "请输入电话号码" : "Enter phone number"
-              }
-              style={{
-                width: "100%",
-                padding: 12,
-                border: errors.phone
-                  ? "2px solid #EF4444"
-                  : "1px solid #D1D5DB",
-                borderRadius: 8,
-                fontSize: "1em",
-              }}
-            />
-            {errors.phone && (
-              <p
-                style={{ color: "#EF4444", fontSize: "0.875em", marginTop: 4 }}
-              >
-                {errors.phone}
-              </p>
-            )}
-          </div>
-
-          <div style={{ marginBottom: 12 }}>
-            <label
-              style={{ fontWeight: 600, marginBottom: 6, display: "block" }}
-            >
-              {language === "zh" ? "电子邮箱（可选）" : "Email (Optional)"}
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={localCheckoutData.email}
-              onChange={handleInputChange}
-              placeholder={language === "zh" ? "请输入电子邮箱" : "Enter email"}
-              style={{
-                width: "100%",
-                padding: 12,
-                border: "1px solid #D1D5DB",
-                borderRadius: 8,
-                fontSize: "1em",
-              }}
-            />
-          </div>
         </div>
 
         {/* Reminders */}
