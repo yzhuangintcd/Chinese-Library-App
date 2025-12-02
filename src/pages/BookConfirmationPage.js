@@ -182,58 +182,6 @@ const BookConfirmationPage = ({
           </div>
         </div>
 
-        {/* Contact details */}
-        <div
-          style={{
-            background: "#F3F4F6",
-            padding: 16,
-            borderRadius: 8,
-            marginBottom: 24,
-          }}
-        >
-          <h3 style={{ marginBottom: 12 }}>
-            {language === "zh" ? "联系方式" : "Contact Information"}
-          </h3>
-          <div>
-            <p
-              style={{ fontSize: "0.875em", color: "#6B7280", marginBottom: 4 }}
-            >
-              {language === "zh" ? "姓名" : "Name"}
-            </p>
-            <p style={{ fontWeight: 600, marginBottom: 12 }}>
-              {checkoutData?.name}
-            </p>
-          </div>
-          <div>
-            <p
-              style={{ fontSize: "0.875em", color: "#6B7280", marginBottom: 4 }}
-            >
-              {language === "zh" ? "电话" : "Phone"}
-            </p>
-            <p
-              style={{
-                fontWeight: 600,
-                marginBottom: checkoutData?.email ? 12 : 0,
-              }}
-            >
-              {checkoutData?.phone}
-            </p>
-          </div>
-          {checkoutData?.email && (
-            <div>
-              <p
-                style={{
-                  fontSize: "0.875em",
-                  color: "#6B7280",
-                  marginBottom: 4,
-                }}
-              >
-                {language === "zh" ? "邮箱" : "Email"}
-              </p>
-              <p style={{ fontWeight: 600 }}>{checkoutData?.email}</p>
-            </div>
-          )}
-        </div>
 
         {/* Important reminders */}
         <div
