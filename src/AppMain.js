@@ -72,6 +72,9 @@ const LibraryApp = () => {
               handleRegister(f);
               setCurrentPage("dashboard");
             }}
+            setLanguage={setLanguage}
+            showLanguageMenu={showLanguageMenu}
+            setShowLanguageMenu={setShowLanguageMenu}
           />
         );
       case "login":
@@ -84,6 +87,9 @@ const LibraryApp = () => {
               handleLogin(a);
               setCurrentPage("dashboard");
             }}
+            setLanguage={setLanguage}
+            showLanguageMenu={showLanguageMenu}
+            setShowLanguageMenu={setShowLanguageMenu}
           />
         );
       case "dashboard":
@@ -195,9 +201,10 @@ const LibraryApp = () => {
     <div className="app-container">
       {renderPage()}
       {showBottomNav && (
-        <BottomNav currentPage={currentPage} 
-        setCurrentPage={setCurrentPage} 
-        language={language}
+        <BottomNav
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          language={language}
         />
       )}
     </div>
